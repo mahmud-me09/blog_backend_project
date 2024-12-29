@@ -1,14 +1,24 @@
-import cors from 'cors'
-import express, { Application, Request, Response } from 'express'
-const app: Application = express()
+import express, { Request, Response } from 'express';
+import cors from 'cors';
+import { globalErrorHandler } from './app/middlewares/globalErrorHandler';
+import notFound from './app/middlewares/notFound';
+import router from './app/routes';
+const app = express();
 
-// parser
-app.use(express.json())
-app.use(cors())
+// middlewares
+app.use(express.json());
+app.use(cors());
 
+// routes
+app.use('/api/v1', router);
+
+// testing
 app.get('/', (req: Request, res: Response) => {
+  res.send('Hello World!');
+});
 
-  res.send('Hello World!')
-})
+// error handling middleware: must define at the bottom.
+app.use(globalErrorHandler);
+app.use(notFound);
 
-export default app
+export default app;
