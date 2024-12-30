@@ -5,4 +5,3 @@ export interface TUser {
   role: 'admin' | 'user'; //– The role of the user, determining their access level. Default is "user".
   isBlocked: boolean; //– A flag indicating whether the user is blocked or not. Default is false.
 }
-
