@@ -4,7 +4,8 @@ import { NextFunction, Request, Response } from 'express';
 import AppError from '../errors/AppError';
 import { StatusCodes } from 'http-status-codes';
 import config from '../config';
-import { TUserRoles } from '../modules/user/auth.interface';
+import { TUserRoles } from '../modules/auth/user.interface';
+
 
 const auth = (...requiredRoles: TUserRoles[]) => {
   return catchAsync(async (req: Request, res: Response, next: NextFunction) => {

@@ -1,7 +1,6 @@
-import { StatusCodes } from 'http-status-codes';
 import { ErrorRequestHandler } from 'express';
 import config from '../config';
-import { ZodError, ZodIssue } from 'zod';
+import { ZodError } from 'zod';
 import { TErrorSource } from '../interface/error';
 import { handleZodError } from '../errors/handleZodError';
 import { handleMongooseError } from '../errors/handleMongooseError';
@@ -13,7 +12,7 @@ export const globalErrorHandler: ErrorRequestHandler = (
   err,
   _req,
   res,
-  next,
+  next
 ) => {
   // setting default value
   let statusCode = err.statusCode || 500;
@@ -49,16 +48,16 @@ export const globalErrorHandler: ErrorRequestHandler = (
     message = simplifiedError?.message;
     errorSources = simplifiedError?.errorSources;
   } else if (err instanceof AppError) {
-    (statusCode = err?.statusCode),
-      (message = err.message),
-      (errorSources = [
-        {
-          path: '',
-          message: err?.message,
-        },
-      ]);
-  }else if (err instanceof Error){
-    message = err?.message
+    statusCode = err?.statusCode;
+    message = err.message;
+    errorSources = [
+      {
+        path: '',
+        message: err?.message,
+      },
+    ];
+  } else if (err instanceof Error) {
+    message = err?.message;
   }
 
   res.status(statusCode).json({

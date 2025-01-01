@@ -10,7 +10,7 @@ app.use(express.json());
 app.use(cors());
 
 // routes
-app.use('/api/v1', router);
+app.use('/api', router);
 
 // testing
 app.get('/', (req: Request, res: Response) => {
