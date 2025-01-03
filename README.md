@@ -21,12 +21,14 @@
 1. Clone the repository.
 2. create a environment variable file with the following keys:
 
+```env
 NODE_ENV=development
 PORT=5000
-DATABASE_URL=your mongodb connection string
-BCRYPT_SALT_ROUNDS=define a salt round in 3-14
-DEFAULT_PASSWORD=give a default password
-JWT_SECRET=jwt secret
+DATABASE_URL=mongodb://localhost:27017/yourdbname
+BCRYPT_SALT_ROUNDS=10
+DEFAULT_PASSWORD=admin123
+JWT_SECRET=supersecretkey
+```
 
 3. run the following commands:
 
