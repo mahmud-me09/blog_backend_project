@@ -24,10 +24,10 @@
 ```env
 NODE_ENV=development
 PORT=5000
-DATABASE_URL=mongodb://localhost:27017/yourdbname
-BCRYPT_SALT_ROUNDS=10
-DEFAULT_PASSWORD=admin123
-JWT_SECRET=supersecretkey
+DATABASE_URL=mongodb connection string
+BCRYPT_SALT_ROUNDS=put a number between 5-15
+DEFAULT_PASSWORD=choose a default password
+JWT_SECRET=provide a secure jwt secret
 ```
 
 3. run the following commands:
