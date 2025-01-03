@@ -4,6 +4,7 @@ import config from '../../config';
 import AppError from '../../errors/AppError';
 import { UserModel } from './user.model';
 import bcrypt from 'bcrypt';
+import { TUser } from './user.interface';
 
 const createUserIntoDB = async (payload: TUser) => {
   const hashedPassword = await bcrypt.hash(
@@ -44,7 +45,7 @@ const loginUserIntoDB = async (payload: {
     role: user.role,
   };
   const token = jwt.sign(tokenPayload, config.jwtSecret as string, {
-    expiresIn: '7d',
+    expiresIn: '30d',
   });
 
   return { token };

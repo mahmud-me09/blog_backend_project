@@ -6,29 +6,29 @@ import { BlogModel } from './blog.model';
 import { JwtPayload } from 'jsonwebtoken';
 
 const createBlogIntoDB = async (user: JwtPayload, payload: TBlog) => {
-  if (user.role !== 'user' && user.id === payload.author) {
-    const result = await BlogModel.create(payload);
-    const processedResult = await BlogModel.findById(result._id)
-      .populate('author')
-      .select('-createdAt -updatedAt -isPublished -__v')
-      .lean();
-    return processedResult;
+  const result = await BlogModel.create(payload);
+  // console.log(result);
+  if (!result) {
+    throw new AppError(StatusCodes.INTERNAL_SERVER_ERROR, 'Blog not created');
   }
+
+  const processedResult = await BlogModel.findById(result._id)
+    .populate('author')
+    .select('-createdAt -updatedAt -isPublished -__v')
+    .lean();
+  return processedResult;
 };
 
 const getAllBlogsFromDB = async (query: Record<string, unknown>) => {
-  const result = new QueryBuilder(
-    BlogModel.find().populate('author'),
-    query
-  )
+  const result = new QueryBuilder(BlogModel.find().populate('author'), query)
     .search(['title', 'content'])
     .filter()
     .sort()
     .modelQuery.lean();
-    
-    if (Array.isArray(result) && result.length === 0) {
-      throw new AppError(StatusCodes.NOT_FOUND, 'No blogs found');
-    }
+
+  if (Array.isArray(result) && result.length === 0) {
+    throw new AppError(StatusCodes.NOT_FOUND, 'No blogs found');
+  }
   return result;
 };
 

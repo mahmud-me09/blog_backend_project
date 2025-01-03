@@ -1,17 +1,17 @@
-import mongoose from 'mongoose'
-import app from './app'
-import config from './app/config'
+import mongoose from 'mongoose';
+import app from './app';
+import config from './app/config';
 
 async function bootstrap() {
   try {
-    await mongoose.connect(config.databaseURL as string)
+    await mongoose.connect(config.databaseURL as string);
 
     app.listen(config.port, () => {
-      console.log(`Blog app is running on ${config.port}`)
-    })
+      console.log(`Blog app is running on ${config.port}`);
+    });
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
 }
 
-bootstrap()
+bootstrap();

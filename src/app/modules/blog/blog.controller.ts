@@ -5,7 +5,6 @@ import { StatusCodes } from 'http-status-codes';
 import AppError from '../../errors/AppError';
 
 const createBlog = catchAsync(async (req, res) =>{
-  console.log(req.user)
   const result = await BlogService.createBlogIntoDB(req.user, req.body);
   sendResponse(res, {
     statusCode: StatusCodes.CREATED,
@@ -45,7 +44,7 @@ const deleteBlog = catchAsync(async (req, res) =>{
     statusCode: StatusCodes.OK,
     success:true,
     message: 'Blog deleted successfully',
-    data: ""
+    data: undefined
   })
 })
 
