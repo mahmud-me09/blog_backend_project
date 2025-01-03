@@ -7,7 +7,7 @@ async function bootstrap() {
     await mongoose.connect(config.databaseURL as string);
 
     app.listen(config.port, () => {
-      console.log(`Blog app is running on ${config.port}`);
+      // console.log(`Blog app is running on ${config.port}`);
     });
   } catch (error) {
     console.log(error);
