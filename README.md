@@ -31,16 +31,17 @@ JWT_SECRET=provide a secure jwt secret
 ```
 
 3. run the following commands:
-
+```bash
 npm i
 npm run build
 npm run dev
-
+```
 4. For eslint access:
-
+```bash
 npm run lint
 npm run lint:fix
-
+```
 5. for beautify:
-
+```bash
 npm run format
+```
