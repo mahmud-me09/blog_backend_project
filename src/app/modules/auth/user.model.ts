@@ -5,7 +5,7 @@ const userSchema = new Schema<TUser>(
   {
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
-    password: { type: String, required: true, select: false },
+    password: { type: String, required: true, select: 0 },
     role: { type:String, enum: ['admin', 'user'], default: 'user' },
     isBlocked: { type: Boolean, default: false },
   },

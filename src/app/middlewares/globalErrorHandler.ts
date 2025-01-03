@@ -8,6 +8,7 @@ import { handleMongooseCastError } from '../errors/handleMongooseCastError';
 import { handleDuplicateEntryError } from '../errors/handleDuplicateEntryError';
 import AppError from '../errors/AppError';
 
+
 export const globalErrorHandler: ErrorRequestHandler = (
   err,
   _req,
@@ -19,7 +20,7 @@ export const globalErrorHandler: ErrorRequestHandler = (
   const isProduction = config.nodeEnvironment === 'production';
   let message = err.message || 'Something went wrong!';
 
-  let errorSources: TErrorSource = [
+  let error: TErrorSource = [
     {
       path: '',
       message: 'Something went wrong!',
@@ -31,26 +32,26 @@ export const globalErrorHandler: ErrorRequestHandler = (
 
     statusCode = simplifiedError?.statusCode;
     message = simplifiedError?.message;
-    errorSources = simplifiedError?.errorSources;
+    error = simplifiedError?.error;
   } else if (err?.name === 'ValidationError') {
     const simplifiedError = handleMongooseError(err);
     statusCode = simplifiedError?.statusCode;
     message = simplifiedError?.message;
-    errorSources = simplifiedError?.errorSources;
+    error = simplifiedError?.error;
   } else if (err?.name === 'CastError') {
     const simplifiedError = handleMongooseCastError(err);
     statusCode = simplifiedError?.statusCode;
     message = simplifiedError?.message;
-    errorSources = simplifiedError?.errorSources;
+    error = simplifiedError?.error;
   } else if (err?.code === 11000) {
     const simplifiedError = handleDuplicateEntryError(err);
     statusCode = simplifiedError?.statusCode;
     message = simplifiedError?.message;
-    errorSources = simplifiedError?.errorSources;
+    error = simplifiedError?.error;
   } else if (err instanceof AppError) {
     statusCode = err?.statusCode;
     message = err.message;
-    errorSources = [
+    error = [
       {
         path: '',
         message: err?.message,
@@ -63,8 +64,9 @@ export const globalErrorHandler: ErrorRequestHandler = (
   res.status(statusCode).json({
     success: false,
     message,
-    errorSources: isProduction ? undefined : errorSources, // Avoid exposing sensitive data in production
+    statusCode,
+    error: isProduction ? undefined : error, // Avoid exposing sensitive data in production
     stack: isProduction ? undefined : err.stack, // Include stack trace only in development
+
   });
-  next();
 };

@@ -10,6 +10,7 @@ export const sendResponse = <T>(
   },
 ) => {
   return res.status(data?.statusCode).json({
+    statusCode: data?.statusCode,
     message: data.message,
     success: data.success,
     data: data.data,

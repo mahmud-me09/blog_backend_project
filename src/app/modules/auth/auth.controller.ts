@@ -15,7 +15,8 @@ const createUser = catchAsync(async (req: Request, res: Response) => {
 });
 
 const loginUser = catchAsync(async (req: Request, res: Response) => {
-  const result = await AuthServices.loginUserIntoDB(req.body);
+  const { email, password } = req.body;
+  const result = await AuthServices.loginUserIntoDB({email, password});
   sendResponse(res, {
     statusCode: StatusCodes.OK,
     success: true,

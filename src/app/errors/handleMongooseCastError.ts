@@ -6,7 +6,7 @@ export const handleMongooseCastError = (
 ): TGenericErrorResponse => {
   const statusCode = 400;
 
-  const errorSources: TErrorSource = [{
+  const error: TErrorSource = [{
       path: err?.path,
       message: err?.message,
     }]
@@ -15,6 +15,7 @@ export const handleMongooseCastError = (
   return {
     statusCode,
     message: 'Invalid ID',
-    errorSources,
+    error,
+    success: false,
   };
 };

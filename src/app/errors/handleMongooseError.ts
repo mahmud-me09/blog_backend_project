@@ -4,7 +4,7 @@ import { TErrorSource, TGenericErrorResponse } from "../interface/error";
 export const handleMongooseError =(err:Error.ValidationError):TGenericErrorResponse=>{
     const statusCode = 400;
     
-    const errorSources:TErrorSource = Object.values(err.errors).map((val) => 
+    const error:TErrorSource = Object.values(err.errors).map((val) => 
     {return{
         path:val?.path,
         message:val?.message
@@ -13,6 +13,7 @@ export const handleMongooseError =(err:Error.ValidationError):TGenericErrorRespo
     return {
       statusCode,
       message: 'Validation Error',
-      errorSources,
+      error,
+      success: false,
     };
 }
